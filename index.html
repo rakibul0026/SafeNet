@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeNet — Crime Reporting System</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC83K-esHgciobSoNR3WfYfw6HJPlsZKqE"></script>
+
+  <style>
+    /* Simple Map & Page Styles */
+    #map {
+      width: 100%;
+      height: 300px;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+    #liveMapBox {
+      margin-bottom: 1.5rem;
+    }
+    .report {
+      background: #e8f0ff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    #alertBox {
+      margin-top: 1rem;
+      padding: 10px;
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header>SafeNet — Crime Reporting & Alert System</header>
+
+  <main>
+    <h2>Report a Crime</h2>
+
+    <div id="liveMapBox">
+      <h3>Your Current Location (Auto Tagged)</h3>
+      <div id="map"></div>
+      <p id="locationStatus">Awaiting location data...</p>
+    </div>
+
+    <form id="crimeForm">
+      <div class="checkbox-group">
+        <input type="checkbox" id="anonymousCheck">
+        <label for="anonymousCheck">Report Anonymously</label>
+      </div>
+
+      <label for="name">Your Name (only if *not* anonymous):</label>
+      <input type="text" id="name" placeholder="Leave blank for anonymous report">
+
+      <label for="crimeType">Type of Crime:</label>
+      <select id="crimeType" required>
+        <option value="">Select crime type</option>
+        <option>Theft</option>
+        <option>Violence (Mob Attack/Assault)</option>
+        <option>Extortion/Blackmail</option>
+        <option>Cyber Crime</option>
+        <option>Other</option>
+      </select>
+
+      <label for="details">Crime Details:</label>
+      <textarea id="details" rows="4" placeholder="Describe what happened, including approximate time..." required></textarea>
+
+      <label for="evidence">Upload Evidence (optional):</label>
+      <input type="file" id="evidence" accept="image/*,video/*">
+
+      <button type="submit" id="submitButton">Submit Report & Notify Nearest Police</button>
+    </form>
+
+    <div id="alertBox" style="display:none;">
+      ✅ Crime reported successfully! Authorities notified instantly.
+    </div>
+
+    <div class="report-list">
+      <h3>📋 Submitted Reports (Local Mock)</h3>
+      <div id="reportContainer"></div>
+    </div>
+
+    <hr>
+
+    <div id="adminMock">
+      <h3>⚙️ Admin Features Mockup</h3>
+      <p>This section simulates police dashboard functionality.</p>
+      <button id="aiFilterButton">Run AI Filter (Verify Reports)</button>
+      <p id="aiFilterStatus"></p>
+    </div>
+
+  </main>
+
+  <footer>&copy; 2025 SafeNet | Built with efficiency in mind</footer>
+
+  <script>
+    let map, marker, userLat = 0, userLng = 0;
+
+    const form = document.getElementById('crimeForm');
+    const nameInput = document.getElementById('name');
+    const anonymousCheck = document.getElementById('anonymousCheck');
+    const reportContainer = document.getElementById('reportContainer');
+    const alertBox = document.getElementById('alertBox');
+    const submitButton = document.getElementById('submitButton');
+    const locationStatus = document.getElementById('locationStatus');
+    const aiFilterButton = document.getElementById('aiFilterButton');
+    const aiFilterStatus = document.getElementById('aiFilterStatus');
+
+    // Initialize Map
+    function initMap(lat, lng) {
+      const location = { lat, lng };
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 16,
+        center: location,
+        disableDefaultUI: true,
+      });
+
+      marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: "Incident Location",
+        icon: { url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png" }
+      });
+
+      locationStatus.textContent = `Location tagged: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    }
+
+    function loadLiveLocation() {
+      if (!navigator.geolocation) {
+        locationStatus.textContent = "Geolocation not supported.";
+        initMap(0, 0);
+        return;
+      }
+
+      locationStatus.textContent = "Getting precise location...";
+
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          userLat = pos.coords.latitude;
+          userLng = pos.coords.longitude;
+          initMap(userLat, userLng);
+        },
+        err => {
+          console.warn("Location error:", err.message);
+          locationStatus.textContent = "Location access denied. Using default location.";
+          initMap(23.8103, 90.4125); // Dhaka fallback
+        },
+        { enableHighAccuracy: true, timeout: 7000, maximumAge: 0 }
+      );
+    }
+
+    // Anonymous toggle
+    anonymousCheck.addEventListener('change', () => {
+      nameInput.disabled = anonymousCheck.checked;
+      nameInput.value = anonymousCheck.checked ? '' : nameInput.value;
+      nameInput.placeholder = anonymousCheck.checked ? 'Report will be anonymous' : 'Leave blank for anonymous report';
+    });
+
+    // Submit report
+    async function submitReport(event) {
+      event.preventDefault();
+
+      const isAnonymous = anonymousCheck.checked;
+      const name = isAnonymous ? "Anonymous" : nameInput.value.trim() || "Anonymous";
+      const type = document.getElementById('crimeType').value;
+      const details = document.getElementById('details').value.trim();
+
+      if (!type || !details) {
+        alert("Please select a crime type and provide details.");
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending Instant Notification...';
+
+      const location = (userLat && userLng) ? `${userLat.toFixed(6)}, ${userLng.toFixed(6)}` : "Location Unavailable";
+
+      const report = {
+        id: Date.now(),
+        name,
+        type,
+        details,
+        location,
+        date: new Date().toLocaleString(),
+        verified: "Pending Verification"
+      };
+
+      await new Promise(r => setTimeout(r, 700)); // Mock API delay
+
+      const reports = JSON.parse(localStorage.getItem('reports')) || [];
+      reports.push(report);
+      localStorage.setItem('reports', JSON.stringify(reports));
+
+      form.reset();
+      anonymousCheck.checked = false;
+      nameInput.disabled = false;
+
+      alertBox.style.display = 'block';
+      setTimeout(() => { alertBox.style.display = 'none'; }, 5000);
+
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit Report & Notify Nearest Police';
+
+      displayReports();
+    }
+
+    // Display reports
+    function displayReports() {
+      const reports = JSON.parse(localStorage.getItem('reports')) || [];
+      reportContainer.innerHTML = reports.reverse().map(r => `
+        <div class="report">
+          <strong>${r.type}</strong> — ${r.date} 
+          <span style="float:right;color:${r.verified.includes('Verified')?'green':'orange'}">${r.verified}</span><br>
+          <em>Reporter:</em> ${r.name}<br>
+          <em>Location:</em> ${r.location}<br>
+          <p>${r.details}</p>
+        </div>
+      `).join('');
+    }
+
+    // AI Filter Mock
+    aiFilterButton.addEventListener('click', () => {
+      let reports = JSON.parse(localStorage.getItem('reports')) || [];
+      if (!reports.length) {
+        aiFilterStatus.textContent = "No reports to verify.";
+        return;
+      }
+      aiFilterStatus.textContent = "Running AI Filter...";
+      setTimeout(() => {
+        reports = reports.map((r, i) => {
+          r.verified = (i % 3 === 0) ? "AI Verified & Dispatched" : "Manual Review Needed";
+          return r;
+        });
+        localStorage.setItem('reports', JSON.stringify(reports));
+        aiFilterStatus.textContent = "AI Filter complete.";
+        displayReports();
+      }, 1500);
+    });
+
+    form.addEventListener('submit', submitReport);
+    window.addEventListener('load', () => {
+      loadLiveLocation();
+      displayReports();
+    });
+  </script>
+</body>
+</html>
