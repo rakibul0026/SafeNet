@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account | Online Crime Reporting System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    /* Header */
+    .header {
+      background-color: #0b2345;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #122f5c;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      flex-wrap: wrap;
+    }
+
+    .navbar a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #1d4582;
+    }
+
+    /* Main content */
+    .content {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .content h2 {
+      color: #0b2345;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .content button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #004aad;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .content button:hover {
+      background-color: #0063ff;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #0b2345;
+      color: #ccc;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    ONLINE CRIME REPORTING SYSTEM
+  </div>
+
+  <div class="navbar">
+    <a href="home.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="index.html">Report Crime</a>
+    <a href="admin.html">Administration</a>
+   <a href="crime_hypothesis.html">Crime hypothesis & Act</a>
+    <a href="crime_vlog.html">Crime Vlog</a>
+    <a href="account.html">My Account</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="content">
+    <h2>My Account</h2>
+
+    <button id="changePasswordBtn">Change Password</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <script>
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Simple frontend change password simulation
+    changePasswordBtn.addEventListener('click', () => {
+      const newPassword = prompt('Enter your new password:');
+      if (newPassword) {
+        localStorage.setItem('userPassword', newPassword);
+        alert('Password changed successfully!');
+      }
+    });
+
+    // Logout simulation
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('userLoggedIn'); // Remove any logged-in flag
+      alert('You have been logged out.');
+      window.location.href = 'home.html'; // Redirect to home
+    });
+  </script>
+
+  <div class="footer">
+    © 2025 Online Crime Reporting System | Designed by MD Rakibul Hassan
+  </div>
+
+</body>
+</html>

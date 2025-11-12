@@ -29,6 +29,7 @@
       background-color: #122f5c;
       border-top: 1px solid #ddd;
       border-bottom: 1px solid #ddd;
+      flex-wrap: wrap;
     }
 
     .navbar a {
@@ -44,9 +45,90 @@
       background-color: #1d4582;
     }
 
-    /* Page content area */
+    /* Hero Section (Cover Image) */
+    .hero {
+      position: relative;
+      background-image: url('crime.jpeg');
+      background-size: cover;
+      background-position: center;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.55); /* dark overlay for better text visibility */
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero-content p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero-content a {
+      display: inline-block;
+      background-color: #004aad;
+      color: white;
+      padding: 12px 30px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .hero-content a:hover {
+      background-color: #0063ff;
+    }
+
+    /* Content Section */
     .content {
-      padding: 20px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .content h2 {
+      color: #0b2345;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .content p {
+      font-size: 18px;
+      color: #333;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #0b2345;
+      color: #ccc;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 14px;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -57,19 +139,37 @@
   </div>
 
   <div class="navbar">
-    <a href="#">Home</a>
-    <a href="#">About Project</a>
-    <a href="#">Dashboard</a>
-    <a href="#">Administration</a>
-    <a href="#">Reports</a>
-    <a href="#">My Account</a>
-    <a href="#">Change Password</a>
-    <a href="#">Logout</a>
+   <a href="home.html">Home</a>
+  <a href="register.html">Register</a>
+  <a href="index.html">Report Crime</a>
+  <a href="admin.html">Administration</a>
+  <a href="crime_hypohesis.html">Crime Hypohesis & Act</a>
+  <a href="crime_vlog.html">Crime Vlog</a>
+  <a href="account.html">My Account</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
   </div>
 
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Report a Crime Online</h1>
+      <p>Submit your complaint safely and quickly to your nearest police department.</p>
+      <a href="#">Log Complaint</a>
+    </div>
+  </div>
+
+  <!-- Content Section -->
   <div class="content">
-    <h2>Welcome to Online Crime Reporting System</h2>
-    <p>This is a sample layout for your project interface.</p>
+    <h2>Welcome to the Online Crime Reporting System</h2>
+    <p>
+      The Online Crime Reporting System allows citizens to report crimes conveniently and securely from anywhere. 
+      Your reports will be forwarded directly to the respective authorities for quick action.
+    </p>
+  </div>
+
+  <div class="footer">
+    © 2025 Online Crime Reporting System | Designed by MD Rakibul Hassan
   </div>
 
 </body>

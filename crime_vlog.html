@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crime Vlog | Online Crime Reporting System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    /* Header */
+    .header {
+      background-color: #0b2345;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #122f5c;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      flex-wrap: wrap;
+    }
+
+    .navbar a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #1d4582;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      background-image: url('crime.jpeg');
+      background-size: cover;
+      background-position: center;
+      height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.55);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+    }
+
+    /* Vlog Section */
+    .vlog-section {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .vlog-section h2 {
+      color: #0b2345;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 20px;
+    }
+
+    .video-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .video-card iframe {
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
+    }
+
+    .video-card h3 {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #122f5c;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #0b2345;
+      color: #ccc;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    ONLINE CRIME REPORTING SYSTEM
+  </div>
+
+  <div class="navbar">
+    <a href="home.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="index.html">Report Crime</a>
+    <a href="admin.html">Administration</a>
+   <a href="crime_hypothesis.html">Crime hypothesis & Act</a>
+    <a href="crime_vlog.html">Crime Vlog</a>
+    <a href="account.html">My Account</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Crime Vlogs</h1>
+      <p>Watch safety awareness videos and real crime case breakdowns</p>
+    </div>
+  </div>
+
+  <!-- Vlog Content -->
+  <div class="vlog-section">
+    <h2>Latest Safety & Awareness Videos</h2>
+    <div class="video-grid">
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/QxkQ8R0rV6k" allowfullscreen></iframe>
+        <h3>How Cyber Crime Works Explained</h3>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/TqHnFI7d2pw" allowfullscreen></iframe>
+        <h3>Top 5 Safety Tips Everyone Should Know</h3>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/Fn8uF2cNTnQ" allowfullscreen></iframe>
+        <h3>How Police Track Criminal Activity</h3>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/zH8Z6s4Rz9w" allowfullscreen></iframe>
+        <h3>Self-Defense Basics for Beginners</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add this inside the vlog-section, below existing videos -->
+
+<div class="vlog-section">
+  <h2>Upload Your Crime Vlog</h2>
+  <p>Share your own video for safety awareness or crime reports.</p>
+
+  <form id="vlogForm" style="max-width:600px;margin:auto;text-align:left;">
+    <label for="vlogUserName">Your Name:</label>
+    <input type="text" id="vlogUserName" placeholder="Optional" style="width:100%;padding:8px;margin:5px 0;">
+
+    <label for="vlogTitle">Video Title:</label>
+    <input type="text" id="vlogTitle" placeholder="Give your video a title" style="width:100%;padding:8px;margin:5px 0;" required>
+
+    <label for="vlogFile">Upload Video (MP4, WebM):</label>
+    <input type="file" id="vlogFile" accept="video/mp4,video/webm" style="width:100%;padding:5px;margin:5px 0;" required>
+
+    <button type="submit" style="background-color:#004aad;color:white;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;margin-top:10px;cursor:pointer;">Upload Video</button>
+  </form>
+
+  <div id="vlogAlert" style="display:none;text-align:center;margin-top:10px;padding:10px;background-color:#d4edda;color:#155724;border-radius:5px;">
+    ✅ Video uploaded successfully!
+  </div>
+
+  <h3 style="margin-top:30px;">User Uploaded Vlogs</h3>
+  <div id="userVlogContainer" style="margin-top:10px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:15px;"></div>
+</div>
+
+<script>
+  const vlogForm = document.getElementById('vlogForm');
+  const userVlogContainer = document.getElementById('userVlogContainer');
+  const vlogAlert = document.getElementById('vlogAlert');
+
+  function displayUserVlogs() {
+    const vlogs = JSON.parse(localStorage.getItem('userVlogs')) || [];
+    userVlogContainer.innerHTML = vlogs.reverse().map(v => `
+      <div class="video-card">
+        <video controls style="width:100%;border-radius:8px;">
+          <source src="${v.url}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <h3>${v.title}</h3>
+        <p><em>by ${v.name || 'Anonymous'}</em></p>
+        <small>${new Date(v.date).toLocaleString()}</small>
+      </div>
+    `).join('');
+  }
+
+  vlogForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('vlogUserName').value.trim();
+    const title = document.getElementById('vlogTitle').value.trim();
+    const file = document.getElementById('vlogFile').files[0];
+    if (!title || !file) return alert('Please provide a title and select a video file.');
+
+    const url = URL.createObjectURL(file);
+    const vlog = { name, title, url, date: new Date() };
+    const vlogs = JSON.parse(localStorage.getItem('userVlogs')) || [];
+    vlogs.push(vlog);
+    localStorage.setItem('userVlogs', JSON.stringify(vlogs));
+
+    vlogForm.reset();
+    vlogAlert.style.display = 'block';
+    setTimeout(() => vlogAlert.style.display = 'none', 3000);
+
+    displayUserVlogs();
+  });
+
+  window.addEventListener('load', displayUserVlogs);
+</script>
+
+
+  <!-- Crime Story Submission Section -->
+  <div class="vlog-section">
+    <h2>Share Your Crime Story / Eyewitness Report</h2>
+    <p>Submit a story or report an incident you witnessed. Your input helps awareness and research.</p>
+
+    <form id="storyForm" style="max-width:600px;margin:auto;text-align:left;">
+      <label for="userName">Your Name:</label>
+      <input type="text" id="userName" placeholder="Optional" style="width:100%;padding:8px;margin:5px 0;">
+      <label for="storyTitle">Story Title:</label>
+      <input type="text" id="storyTitle" placeholder="Give your story a title" style="width:100%;padding:8px;margin:5px 0;" required>
+      <label for="storyContent">Story / Eyewitness Details:</label>
+      <textarea id="storyContent" rows="5" placeholder="Describe what happened..." style="width:100%;padding:8px;margin:5px 0;" required></textarea>
+      <button type="submit" style="background-color:#004aad;color:white;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;margin-top:10px;cursor:pointer;">Submit Story</button>
+    </form>
+
+    <div id="storyAlert" style="display:none;text-align:center;margin-top:10px;padding:10px;background-color:#d4edda;color:#155724;border-radius:5px;">
+      ✅ Story submitted successfully!
+    </div>
+
+    <h3 style="margin-top:30px;">Submitted Stories</h3>
+    <div id="storyContainer" style="margin-top:10px;"></div>
+  </div>
+
+  <script>
+    const storyForm = document.getElementById('storyForm');
+    const storyContainer = document.getElementById('storyContainer');
+    const storyAlert = document.getElementById('storyAlert');
+
+    function displayStories() {
+      const stories = JSON.parse(localStorage.getItem('crimeStories')) || [];
+      storyContainer.innerHTML = stories.reverse().map(s => `
+        <div style="background:white;padding:10px;margin-bottom:10px;border-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,0.2);">
+          <strong>${s.title}</strong> <em>by ${s.name || 'Anonymous'}</em>
+          <p>${s.content}</p>
+          <small>${new Date(s.date).toLocaleString()}</small>
+        </div>
+      `).join('');
+    }
+
+    storyForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('userName').value.trim();
+      const title = document.getElementById('storyTitle').value.trim();
+      const content = document.getElementById('storyContent').value.trim();
+      if (!title || !content) return alert('Please fill all required fields.');
+      const story = { name, title, content, date: new Date() };
+      const stories = JSON.parse(localStorage.getItem('crimeStories')) || [];
+      stories.push(story);
+      localStorage.setItem('crimeStories', JSON.stringify(stories));
+      storyForm.reset();
+      storyAlert.style.display = 'block';
+      setTimeout(() => storyAlert.style.display = 'none', 3000);
+      displayStories();
+    });
+
+    window.addEventListener('load', displayStories);
+  </script>
+
+  <div class="footer">
+    © 2025 Online Crime Reporting System | Designed by MD Rakibul Hassan
+  </div>
+
+</body>
+</html>

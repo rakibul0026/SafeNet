@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration - SafeNet</title>
+
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <style>
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      color: #0b2345;
+    }
+    #loginBox {
+      text-align: center;
+      padding: 20px;
+    }
+    #loginBox input {
+      padding: 10px;
+      width: 60%;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    #loginBox button {
+      margin-top: 12px;
+      padding: 10px 20px;
+      background: #004aad;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .report {
+      background: #e8f0ff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #004aad;
+    }
+    .admin-btns button {
+      margin-right: 10px;
+      padding: 6px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .verify-btn { background: #28a745; color: #fff; }
+    .reject-btn { background: #dc3545; color: #fff; }
+    .delete-btn { background: #6c757d; color: #fff; }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>Online Crime Reporting System</header>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="index.html">Report Crime</a>
+    <a href="admin.html">Administration</a>
+    <a href="crime_hypothesis.html">Crime hypothesis & Act</a>
+    <a href="crime_vlog.html">Crime Vlog</a>
+    <a href="account.html">My Account</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <h2>Administration Panel</h2>
+    <p>Only authorized personnel can manage reports.</p>
+
+    <!-- ADMIN LOGIN -->
+    <div id="loginBox">
+      <h3>Admin Login</h3>
+      <input type="password" id="adminPass" placeholder="Enter admin password">
+      <br>
+      <button onclick="adminLogin()">Login</button>
+      <p id="loginMsg" style="color:red;"></p>
+    </div>
+
+    <!-- REPORT MANAGEMENT -->
+    <div id="adminPanel" style="display:none;">
+      <h3>All Submitted Reports</h3>
+      <div id="reportList"></div>
+    </div>
+  </main>
+
+  <footer>© 2025 SafeNet | Developed by MD Rakibul Hassan</footer>
+
+
+  <script>
+    const ADMIN_PASSWORD = "12345"; // Set your own password
+
+    function adminLogin() {
+      const input = document.getElementById("adminPass").value;
+      const msg = document.getElementById("loginMsg");
+
+      if (input === ADMIN_PASSWORD) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        loadReports();
+      } else {
+        msg.textContent = "Incorrect password.";
+      }
+    }
+
+    function loadReports() {
+      const reports = JSON.parse(localStorage.getItem("reports")) || [];
+      const list = document.getElementById("reportList");
+
+      if (!reports.length) {
+        list.innerHTML = "<p>No reports found.</p>";
+        return;
+      }
+
+      list.innerHTML = reports.map(r => `
+        <div class="report">
+          <b>${r.type}</b> — ${r.date}
+          <span style="float:right;color:${r.verified.includes("Verified")?'green':'orange'}">${r.verified}</span>
+          <br><em>Reporter:</em> ${r.name}<br>
+          <em>Location:</em> ${r.location}<br>
+          <p>${r.details}</p>
+
+          <div class="admin-btns">
+            <button class="verify-btn" onclick="verifyReport(${r.id})">Verify</button>
+            <button class="reject-btn" onclick="rejectReport(${r.id})">Reject</button>
+            <button class="delete-btn" onclick="deleteReport(${r.id})">Delete</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function verifyReport(id) {
+      updateStatus(id, "✅ Verified & Dispatched");
+    }
+
+    function rejectReport(id) {
+      updateStatus(id, "❌ Rejected");
+    }
+
+    function deleteReport(id) {
+      let reports = JSON.parse(localStorage.getItem("reports")) || [];
+      reports = reports.filter(r => r.id !== id);
+      localStorage.setItem("reports", JSON.stringify(reports));
+      loadReports();
+    }
+
+    function updateStatus(id, status) {
+      let reports = JSON.parse(localStorage.getItem("reports")) || [];
+      reports = reports.map(r => r.id === id ? { ...r, verified: status } : r);
+      localStorage.setItem("reports", JSON.stringify(reports));
+      loadReports();
+    }
+  </script>
+
+</body>
+</html>

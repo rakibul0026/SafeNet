@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Online Crime Reporting System</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    /* Header */
+    .header {
+      background-color: #0b2345;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #122f5c;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      flex-wrap: wrap;
+    }
+
+    .navbar a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #1d4582;
+    }
+
+    /* Form Box */
+    .form-container {
+      width: 95%;
+      max-width: 850px;
+      background-color: white;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #0b2345;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .form-container p {
+      text-align: center;
+      font-size: 17px;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    form .row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    form .row div {
+      flex: 1;
+    }
+
+    label {
+      font-weight: bold;
+      color: #0b2345;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 12px;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      resize: none;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      background-color: #004aad;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0063ff;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #0b2345;
+      color: #ccc;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      form .row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    ONLINE CRIME REPORTING SYSTEM
+  </div>
+
+  <div class="navbar">
+    <a href="home.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="index.html">Report Crime</a>
+    <a href="admin.html">Administration</a>
+   <a href="crime_hypothesis.html">Crime hypothesis & Act</a>
+    <a href="crime_vlog.html">Crime Vlog</a>
+    <a href="account.html">My Account</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="form-container">
+    <h2>User Registration</h2>
+    <p>Create your account to report crimes and access your dashboard.</p>
+
+    <form>
+      <div class="row">
+        <div>
+          <label>Full Name</label>
+          <input type="text" placeholder="Enter your full name" required>
+        </div>
+
+        <div>
+          <label>Father's Name</label>
+          <input type="text" placeholder="Enter father's name" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Date of Birth</label>
+          <input type="date" required>
+        </div>
+
+        <div>
+          <label>Gender</label>
+          <select required>
+            <option value="">Select gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>NID Number</label>
+          <input type="text" placeholder="Enter your NID number" required>
+        </div>
+
+        <div>
+          <label>Phone Number</label>
+          <input type="text" placeholder="+8801XXXXXXXXX" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Email Address</label>
+          <input type="email" placeholder="Enter your email address" required>
+        </div>
+
+        <div>
+          <label>Password</label>
+          <input type="password" placeholder="Create a password" required>
+        </div>
+      </div>
+
+      <label>Present Address</label>
+      <textarea placeholder="Enter your present address..." required></textarea>
+
+      <label>Permanent Address</label>
+      <textarea placeholder="Enter your permanent address..." required></textarea>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <div class="footer">
+    © 2025 Online Crime Reporting System | Designed by MD Rakibul Hassan
+  </div>
+
+</body>
+</html>

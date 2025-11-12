@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crime Hypothesis | Online Crime Reporting System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    /* Header */
+    .header {
+      background-color: #0b2345;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #122f5c;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      flex-wrap: wrap;
+    }
+
+    .navbar a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #1d4582;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      background-image: url('crime.jpeg');
+      background-size: cover;
+      background-position: center;
+      height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.55);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+    }
+
+    /* Content Section */
+    .content {
+      padding: 40px;
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .content h2 {
+      color: #0b2345;
+      font-size: 28px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .content p {
+      font-size: 18px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    /* Hypothesis Form */
+    form {
+      margin-top: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #004aad;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #0063ff;
+    }
+
+    /* Hypothesis List */
+    .hypothesis-item {
+      background: #e8f0ff;
+      padding: 10px;
+      border-left: 4px solid #004aad;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .footer {
+      background-color: #0b2345;
+      color: #ccc;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    ONLINE CRIME REPORTING SYSTEM
+  </div>
+
+  <div class="navbar">
+    <a href="home.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="index.html">Report Crime</a>
+    <a href="admin.html">Administration</a>
+    <a href="crime_hypothesis.html">Crime Hypothesis & Act</a>
+    <a href="crime_vlog.html">Crime Vlog</a>
+    <a href="account.html">My Account</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Crime Hypotheses</h1>
+      <p>Share your insights or predictions about criminal patterns safely</p>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content">
+    <h2>Submit Your Hypothesis</h2>
+    <p>Describe a possible crime scenario, pattern, or insight you have observed. 
+    This can help in awareness and analysis.</p>
+
+    <form id="hypothesisForm">
+      <label for="userName">Your Name (Optional)</label>
+      <input type="text" id="userName" placeholder="Anonymous if left blank">
+
+      <label for="hypothesisTitle">Hypothesis Title</label>
+      <input type="text" id="hypothesisTitle" placeholder="Enter a title" required>
+
+      <label for="hypothesisContent">Details / Explanation</label>
+      <textarea id="hypothesisContent" rows="5" placeholder="Explain your hypothesis..." required></textarea>
+
+      <button type="submit">Submit Hypothesis</button>
+    </form>
+
+    <h2 style="margin-top:30px;">Submitted Hypotheses</h2>
+    <div id="hypothesisContainer" style="margin-top:10px;"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('hypothesisForm');
+    const container = document.getElementById('hypothesisContainer');
+
+    function displayHypotheses() {
+      const hypotheses = JSON.parse(localStorage.getItem('crimeHypotheses')) || [];
+      container.innerHTML = hypotheses.reverse().map(h => `
+        <div class="hypothesis-item">
+          <strong>${h.title}</strong> <em>by ${h.name || 'Anonymous'}</em>
+          <p>${h.content}</p>
+          <small>${new Date(h.date).toLocaleString()}</small>
+        </div>
+      `).join('');
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('userName').value.trim();
+      const title = document.getElementById('hypothesisTitle').value.trim();
+      const content = document.getElementById('hypothesisContent').value.trim();
+
+      if (!title || !content) return alert('Please fill all required fields.');
+
+      const hypothesis = { name, title, content, date: new Date() };
+      const hypotheses = JSON.parse(localStorage.getItem('crimeHypotheses')) || [];
+      hypotheses.push(hypothesis);
+      localStorage.setItem('crimeHypotheses', JSON.stringify(hypotheses));
+
+      form.reset();
+      displayHypotheses();
+    });
+
+    window.addEventListener('load', displayHypotheses);
+  </script>
+
+  <div class="footer">
+    © 2025 Online Crime Reporting System | Designed by MD Rakibul Hassan
+  </div>
+
+</body>
+</html>
